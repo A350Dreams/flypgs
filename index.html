@@ -1,1111 +1,262 @@
-<!DOCTYPE html>
+<!-- Save as index.html -->
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pegasus Virtual Airlines - Fly the Digital Skies!</title>
-    <link rel="icon" href="https://cdn.discordapp.com/attachments/1391859962652786698/1391869733732880565/pegasus-airlines-3.png?ex=688094f4&is=687f4374&hm=58a1a9668632db9a36c8f733c856a3f202934950ca288b8651d7b22b52e773e0&" type="image/x-icon">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <style>
-        /* CSS Variables */
-        :root {
-            --primary-color: #FF6600; /* Pegasus Orange */
-            --secondary-color: #007BFF; /* A complementary blue */
-            --dark-bg: #2c3e50; /* Darker blue-gray for main sections */
-            --light-bg: #ecf0f1; /* Light gray for alternating sections */
-            --text-color: #34495e; /* Darker text */
-            --light-text: #ecf0f1; /* Light text on dark backgrounds */
-            --white: #fff;
-            --header-height: 70px; /* Slightly smaller header */
-        }
-
-        /* Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, sans-serif; /* Simpler font stack */
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--light-bg);
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1000px; /* Slightly narrower container */
-            margin: 0 auto;
-            padding: 40px 0; /* Reduced padding */
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--primary-color);
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: var(--secondary-color);
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Simple, clean font */
-            color: var(--text-color);
-            line-height: 1.2;
-        }
-
-        h1 { font-size: 3em; }
-        h2 { font-size: 2.2em; }
-        h3 { font-size: 1.8em; }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 10px 25px;
-            border-radius: 5px; /* Simpler corners */
-            text-align: center;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-            cursor: pointer;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 0.9em;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .primary-btn {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none; /* No border for primary */
-        }
-
-        .primary-btn:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .secondary-btn {
-            background-color: var(--white);
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-
-        .secondary-btn:hover {
-            background-color: var(--primary-color);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 15px 5%; /* Reduced padding */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--white); /* Solid white header */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            height: var(--header-height);
-        }
-
-        .logo img {
-            height: 40px; /* Adjust logo size */
-            filter: none; /* Always original color */
-        }
-
-        .main-nav .nav-links {
-            display: flex;
-            gap: 20px; /* Reduced gap */
-        }
-
-        .main-nav .nav-links a {
-            color: var(--text-color); /* Always dark text */
-            font-weight: 500;
-            padding: 5px 0;
-            position: relative;
-        }
-
-        .main-nav .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -3px; /* Smaller underline */
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .main-nav .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 10px; /* Reduced gap */
-        }
-
-        .language-selector {
-            padding: 6px 10px; /* Smaller padding */
-            border-radius: 3px;
-            border: 1px solid var(--text-color);
-            background-color: var(--white);
-            color: var(--text-color);
-            cursor: pointer;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2334495e%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%01-13%205.7H18.4c-6.1%200-12.1-4.3-14.7-10.2-2.7-5.9-1.2-12.8%203.4-17.4L139.3%203.6c5.2-4.6%2012.8-4.6%2018%200l130.3%20117.3c4.6%204.6%206.1%2011.5%203.4%2017.4z%22%2F%3E%3C%2Fsvg%3E'); /* Dark arrow */
-            background-repeat: no-repeat;
-            background-position: right 6px top 50%;
-            background-size: 10px auto;
-            font-size: 0.8em;
-        }
-
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--text-color);
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            position: relative;
-            width: 100vw;
-            height: 80vh; /* Shorter hero */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--white);
-            overflow: hidden;
-            background: url('https://cdnp.flypgs.com/files/pegasus-ucuz-ucak-bileti-adresi.jpg') no-repeat center center/cover; /* Static image background */
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            padding: 0 20px;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5em;
-            margin-bottom: 15px;
-            color: var(--white);
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-
-        .hero-content p {
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            color: var(--light-text);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-        }
-
-        /* Generic Section Styling */
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px; /* Reduced margin */
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .section-title h2 {
-            color: var(--text-color);
-            font-size: 2.5em;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px; /* Shorter underline */
-            height: 3px; /* Thinner underline */
-            background-color: var(--primary-color);
-            border-radius: 1.5px;
-        }
-
-        /* About Us Section */
-        .about-us-section {
-            background-color: var(--white);
-        }
-
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 30px; /* Reduced gap */
-        }
-
-        .about-image {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px; /* Simpler corners */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
-        .about-text h3 {
-            color: var(--primary-color);
-            font-size: 1.8em;
-            margin-bottom: 15px;
-        }
-
-        .about-text p {
-            margin-bottom: 10px;
-            color: var(--text-color);
-            font-size: 1em;
-        }
-
-        /* Fleet Section */
-        .fleet-section {
-            background-color: var(--light-bg);
-        }
-
-        .fleet-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly smaller min-width */
-            gap: 25px; /* Reduced gap */
-        }
-
-        .aircraft-card {
-            background-color: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease;
-            text-align: center;
-        }
-
-        .aircraft-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-        }
-
-        .aircraft-card img {
-            width: 100%;
-            height: 180px; /* Slightly shorter image */
-            object-fit: cover;
-            display: block;
-        }
-
-        .aircraft-card-content {
-            padding: 20px; /* Reduced padding */
-        }
-
-        .aircraft-card-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 8px;
-            font-size: 1.4em;
-        }
-
-        .aircraft-card-content p {
-            color: var(--text-color);
-            font-size: 0.9em;
-            margin-bottom: 10px;
-        }
-
-        /* Route Network Section */
-        .route-network-section {
-            background-color: var(--white);
-        }
-
-        .route-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Slightly smaller min-width */
-            gap: 20px; /* Reduced gap */
-        }
-
-        .route-card-item {
-            background-color: var(--light-bg);
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .route-card-item:hover {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-
-        .route-card-item:hover h3,
-        .route-card-item:hover p {
-            color: var(--white);
-        }
-
-        .route-card-item h3 {
-            color: var(--primary-color);
-            font-size: 1.3em;
-            margin-bottom: 8px;
-        }
-
-        .route-card-item p {
-            color: var(--text-color);
-            font-size: 0.9em;
-        }
-
-        /* Pilot Center / Dispatch Section */
-        .pilot-center-section {
-            background-color: var(--dark-bg);
-            color: var(--light-text);
-            padding-bottom: 60px; /* Reduced padding */
-        }
-
-        .pilot-center-section .section-title h2 {
-            color: var(--white);
-        }
-
-        .pilot-center-section .section-title h2::after {
-            background-color: var(--primary-color);
-        }
-
-        .pilot-center-content {
-            display: flex;
-            gap: 30px; /* Reduced gap */
-            align-items: flex-start;
-        }
-
-        .pilot-info {
-            flex: 1;
-            background-color: rgba(255,255,255,0.08); /* Slightly more opaque */
-            padding: 25px; /* Reduced padding */
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
-
-        .pilot-info h3 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.6em;
-        }
-
-        .pilot-stats ul {
-            margin-top: 15px;
-        }
-
-        .pilot-stats ul li {
-            font-size: 1em;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            color: var(--light-text);
-        }
-
-        .pilot-stats ul li i {
-            margin-right: 8px;
-            color: var(--primary-color);
-            font-size: 1.1em;
-        }
-
-        .dispatch-form-container {
-            flex: 1.5;
-            background-color: var(--white);
-            padding: 30px; /* Reduced padding */
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .dispatch-form-container h3 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.8em;
-        }
-
-        .dispatch-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px; /* Reduced gap */
-        }
-
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: var(--text-color);
-            font-size: 0.9em;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="number"],
-        .form-group input[type="date"],
-        .form-group select,
-        .form-group textarea {
-            padding: 10px 12px; /* Reduced padding */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 0.95em;
-            background-color: var(--white);
-            color: var(--text-color);
-        }
-
-        .form-group textarea {
-            min-height: 80px; /* Shorter textarea */
-        }
-
-        .dispatch-form button {
-            grid-column: 1 / -1;
-            margin-top: 15px;
-            padding: 12px; /* Reduced padding */
-            font-size: 1em;
-            border-radius: 5px; /* Simpler corners */
-        }
-
-        /* Join Us Section */
-        .join-us-section {
-            background-color: var(--primary-color);
-            color: var(--white);
-            text-align: center;
-            padding: 60px 0; /* Reduced padding */
-        }
-
-        .join-us-section h2 {
-            color: var(--white);
-            margin-bottom: 25px;
-        }
-
-        .join-us-section p {
-            font-size: 1.1em;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            color: var(--light-text);
-        }
-
-        .join-us-section .btn {
-            background-color: var(--white);
-            color: var(--primary-color);
-            border: none;
-        }
-
-        .join-us-section .btn:hover {
-            background-color: var(--secondary-color);
-            color: var(--white);
-        }
-
-        /* Community Section */
-        .community-section {
-            background-color: var(--light-bg);
-            text-align: center;
-        }
-
-        .community-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px; /* Reduced gap */
-            flex-wrap: wrap;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark-bg);
-            color: var(--light-text); /* Lighter text for footer */
-            padding: 40px 0 15px; /* Reduced padding */
-            font-size: 0.9em;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Slightly smaller min-width */
-            gap: 25px; /* Reduced gap */
-            margin-bottom: 30px;
-        }
-
-        .footer-col h4 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.2em;
-            position: relative;
-            padding-bottom: 3px;
-        }
-
-        .footer-col h4::after {
-            width: 25px; /* Shorter underline */
-            height: 2px;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 8px;
-        }
-
-        .footer-col ul li a {
-            color: var(--light-text);
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        .social-media {
-            display: flex;
-            gap: 10px; /* Reduced gap */
-            margin-top: 15px;
-        }
-
-        .social-media a {
-            color: var(--light-text);
-            font-size: 20px; /* Smaller icons */
-        }
-
-        .social-media a:hover {
-            color: var(--primary-color);
-        }
-
-        .copyright {
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            padding-top: 15px;
-            margin-top: 15px;
-            font-size: 0.8em;
-            color: #999;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content h1 {
-                font-size: 2.8em;
-            }
-            .hero-content p {
-                font-size: 1em;
-            }
-
-            .main-nav .nav-links {
-                width: 220px; /* Smaller mobile nav */
-                padding: 80px 20px 20px;
-            }
-
-            .main-nav .nav-links a {
-                margin-bottom: 15px;
-                font-size: 1.1em;
-            }
-
-            .about-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .about-image {
-                width: 90%;
-                margin-bottom: 20px;
-            }
-
-            .pilot-center-content {
-                flex-direction: column;
-            }
-
-            .pilot-info, .dispatch-form-container {
-                width: 100%;
-            }
-
-            .dispatch-form {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.2em; }
-            h2 { font-size: 1.8em; }
-            h3 { font-size: 1.5em; }
-
-            .hero-content h1 {
-                font-size: 2.2em;
-            }
-            .hero-content p {
-                font-size: 0.9em;
-            }
-
-            .container {
-                padding: 30px 0;
-            }
-
-            .section-title {
-                margin-bottom: 30px;
-            }
-
-            .about-image {
-                width: 100%;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .footer-col h4::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            .social-media {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 1.8em;
-            }
-            .hero-content p {
-                font-size: 0.8em;
-            }
-
-            .logo img {
-                height: 30px;
-            }
-
-            .btn {
-                padding: 8px 18px;
-                font-size: 0.8em;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lorem Ipsum — Generator & Demo</title>
+  <meta name="description" content="Minimal, responsive lorem ipsum website with generator and preview."/>
+  <style>
+    :root{
+      --bg:#0f1720; --panel:#0b1220; --muted:#9aa4b2; --accent:#7dd3fc;
+      --glass: rgba(255,255,255,0.03); --radius:14px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:
+      radial-gradient(1200px 400px at 10% 10%, rgba(125,211,252,0.04), transparent 8%),
+      radial-gradient(900px 300px at 90% 90%, rgba(125,211,252,0.02), transparent 8%),
+      var(--bg);
+      color:#e6eef6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      display:flex; align-items:center; justify-content:center; padding:40px;
+      gap:24px;
+    }
+
+    .container{
+      width:100%; max-width:1100px; display:grid;
+      grid-template-columns: 420px 1fr; gap:28px; align-items:start;
+    }
+
+    /* Sidebar / Controls */
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.04); padding:22px; border-radius:var(--radius);
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    }
+    h1{font-size:20px; margin:0 0 12px 0; letter-spacing:0.2px}
+    p.lead{margin:0 0 18px 0; color:var(--muted); font-size:13px}
+
+    label{display:block; font-size:13px; color:var(--muted); margin:12px 0 6px}
+    .row{display:flex; gap:8px}
+    input[type=number], select, .btn, input[type=text] {
+      width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04);
+      background:var(--glass); color:inherit; font-size:14px;
+    }
+    input[type=range]{width:100%}
+    .btn{
+      background:linear-gradient(90deg,var(--accent), #60a5fa 120%); border:0; color:#072033; font-weight:700;
+      cursor:pointer; padding:10px 12px; display:inline-block; text-align:center;
+    }
+    .small{font-size:12px; color:var(--muted)}
+
+    .preview{
+      padding:18px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03); min-height:360px; overflow:auto;
+    }
+
+    .actions{display:flex; gap:8px; margin-top:14px}
+    .muted{color:var(--muted)}
+    .meta{display:flex; gap:10px; align-items:center; margin-top:12px; font-size:13px; color:var(--muted)}
+
+    /* header inside preview */
+    .hero{
+      display:flex; align-items:flex-start; gap:18px; margin-bottom:16px;
+    }
+    .logo{
+      width:68px; height:68px; border-radius:12px; background:linear-gradient(180deg,#0b2230,#071226);
+      display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); font-size:18px; border:1px solid rgba(125,211,252,0.08)
+    }
+    .title{font-size:18px; margin:0 0 4px}
+    .subtitle{margin:0; color:var(--muted); font-size:13px}
+
+    /* lorem text */
+    .lorem{line-height:1.7; font-size:15px; color:#dfe9f5}
+    pre.lorem{white-space:pre-wrap; word-wrap:break-word; background:transparent; border:0; padding:0; margin:0}
+
+    /* footer */
+    .footer{font-size:12px; color:var(--muted); margin-top:18px; text-align:right}
+
+    /* responsive */
+    @media (max-width:980px){
+      .container{grid-template-columns:1fr; padding:0}
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <a href="#">
-                <img src="https://cdn.discordapp.com/attachments/1391859962652786698/1391869733732880565/pegasus-airlines-3.png?ex=688094f4&is=687f4374&hm=58a1a9668632db9a36c8f733c856a3f202934950ca288b8651d7b22b52e773e0&" alt="Pegasus Virtual Airlines Logo">
-            </a>
+  <main class="container" role="main" aria-labelledby="main-title">
+    <section class="panel" aria-label="Generator controls">
+      <h1 id="main-title">Lorem Ipsum Generator</h1>
+      <p class="lead">Generate placeholder text (paragraphs, sentences, or words). Configure length, type and variants.</p>
+
+      <label for="mode">Mode</label>
+      <select id="mode" title="Choose output mode">
+        <option value="paragraphs">Paragraphs</option>
+        <option value="sentences">Sentences</option>
+        <option value="words">Words</option>
+      </select>
+
+      <label for="count">Count (<span id="countLabel">3</span>)</label>
+      <input id="count" type="range" min="1" max="12" value="3" />
+
+      <label for="start-phrase">Start with "Lorem ipsum"</label>
+      <select id="start-phrase">
+        <option value="yes">Yes</option>
+        <option value="no" selected>No</option>
+      </select>
+
+      <label for="variant">Variant</label>
+      <select id="variant">
+        <option value="classic">Classic</option>
+        <option value="hipster">Hipster (modern words)</option>
+        <option value="short">Short (concise words)</option>
+      </select>
+
+      <label for="customPrefix">Custom prefix (optional)</label>
+      <input id="customPrefix" type="text" placeholder="e.g. Placeholder text —" />
+
+      <div class="actions" style="margin-top:14px;">
+        <button id="generate" class="btn">Generate</button>
+        <button id="copy" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06); color:var(--muted)">Copy</button>
+        <button id="download" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06); color:var(--muted)">Download</button>
+      </div>
+
+      <div class="meta">
+        <span class="small">Fast client-side generator</span>
+        <span style="flex:1"></span>
+        <span class="small">No external libs</span>
+      </div>
+    </section>
+
+    <section class="panel preview" aria-label="Preview area">
+      <div class="hero">
+        <div class="logo">LI</div>
+        <div>
+          <h2 class="title">Lorem Ipsum Demo</h2>
+          <p class="subtitle">Placeholder text preview — copy or download for mockups and prototypes.</p>
         </div>
-        <nav class="main-nav">
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about-us">About Us</a></li>
-                <li><a href="#fleet">Fleet</a></li>
-                <li><a href="#route-network">Routes</a></li>
-                <li><a href="#pilot-center">Pilot Center</a></li>
-                <li><a href="#join-us">Join Us</a></li>
-                <li><a href="#community">Community</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="header-right">
-            <a href="https://discord.com/oauth2/authorize?client_id=1397311137711656961&response_type=token&redirect_uri=https%3A%2F%2Fa350dreams.github.io%2Fflypgs%2F&scope=identify" class="btn secondary-btn">Pilot Login</a>
-        </div>
-    </header>
+      </div>
 
-    <main>
-        <section id="home" class="hero-section">
-            <div class="hero-content">
-                <h1>Pegasus Virtual Airlines</h1>
-                <p>Soar to new heights in the digital skies. Your flight simulation adventure starts here!</p>
-                <a href="#about-us" class="btn primary-btn">Explore PVA</a>
-            </div>
-        </section>
+      <div id="output" class="lorem" role="article" aria-live="polite">
+        <pre class="lorem" id="loremText"></pre>
+      </div>
 
-        <section id="about-us" class="about-us-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Our Story & Mission</h2>
-                </div>
-                <div class="about-content">
-                    <div class="about-image">
-                        <img src="https://cd.pfconnect.online/uploads/44491268618124480000.png" alt="Pegasus Virtual Airlines Team">
-                    </div>
-                    <div class="about-text">
-                        <h3>Dedicated to Realistic Flight Simulation</h3>
-                        <p>
-                            Pegasus Virtual Airlines (PVA) was founded in [Year] by a group of passionate flight simulation enthusiasts
-                            with a vision to create a dynamic and authentic virtual airline experience. We aim to replicate the
-                            operations of the real-world Pegasus Airlines, offering our pilots a chance to immerse themselves
-                            in realistic flight procedures, route networks, and fleet management.
-                        </p>
-                        <p>
-                            Our mission is to foster a vibrant and supportive community where virtual pilots of all skill levels
-                            can connect, learn, and grow. We provide the tools, resources, and environment for you to
-                            enhance your flight simulation hobby, from mastering complex aircraft to navigating challenging
-                            weather conditions and participating in exciting group events.
-                        </p>
-                        <a href="#join-us" class="btn secondary-btn">Join Our Community</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <div class="footer">Generated: <span id="generatedAt"></span></div>
+    </section>
+  </main>
 
-        <section id="fleet" class="fleet-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Our Modern Virtual Fleet</h2>
-                </div>
-                <div class="fleet-grid">
-                    <div class="aircraft-card">
-                        <img src="https://media.discordapp.net/attachments/1391362537739649055/1391364438984228944/960px-Pegasus_Airlines2C_TC-NBU2C_Airbus_A320-251N_284957010916129.png?ex=6880b89c&is=687f671c&hm=afb34f96bab9ebbc6eb11bb4d8967bb62ac6fadfff5689355b12d61ca529e76e&=&format=webp&quality=lossless&width=1079&height=719" alt="Airbus A320neo">
-                        <div class="aircraft-card-content">
-                            <h3>Airbus A320-214</h3>
-                            <p>The backbone of our short and medium-haul operations, known for efficiency and modern avionics.</p>
-                        </div>
-                    </div>
-                    <div class="aircraft-card">
-                        <img src="https://media.discordapp.net/attachments/1391362537739649055/1391364439592145066/Boeing-737-800-TC-AHP-Pegasus-DUS-15-04-2016-C2A9-Volker-K-Thomalla-VKT_0657-Kopie.png?ex=6880b89c&is=687f671c&hm=f1dacf7f4da0ae3bc9784870654f2927934e5e18d5bf441cde04f808bb08677b&=&format=webp&quality=lossless&width=1020&height=685" alt="Boeing 737-800">
-                        <div class="aircraft-card-content">
-                            <h3>Boeing 737-800</h3>
-                            <p>A highly reliable and versatile workhorse, perfect for a wide range of our domestic and international routes.</p>
-                        </div>
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 40px;">
-                
-                </div>
-            </div>
-        </section>
+  <script>
+    (function(){
+      const classic = [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      ];
 
-        <section id="route-network" class="route-network-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Explore Our Global Route Network</h2>
-                </div>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 30px; color: var(--text-color); font-size: 1em;">
-                    From bustling hubs in Turkey to vibrant cities across Europe, Asia, and Africa, our network offers diverse and exciting flying opportunities for every virtual pilot.
-                </p>
-                <div class="route-grid">
-                    <div class="route-card-item">
-                        <h3>London</h3>
-                       
-                    </div>
-                    <div class="route-card-item">
-                        <h3>Kitillä</h3>
-                        
-                    </div>
-                    <div class="route-card-item">
-                        <h3>Menorca</h3>
+      const hipsterWords = ("kale microdosing skateboard cloud-park irony echo-chamber palo-santo " +
+        "franzen cold-pressed adaptogen bespoke palo-santo synth").split(" ");
 
-                    </div>
-                    <div class="route-card-item">
-                        <h3>Gran Canaria</h3>
-                        
-                    </div>
-                    <div class="route-card-item">
-                        <h3>Punta Cana</h3>
-                       
-                    </div>
-                    <div class="route-card-item">
-                        <h3>Larnaka</h3>
-                     
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 40px;">
-               
-                </div>
-            </div>
-        </section>
+      const shortWords = ("lorem ipsum dolor sit amet elit sed do").split(" ");
 
-      
+      const ui = {
+        mode: document.getElementById('mode'),
+        countRange: document.getElementById('count'),
+        countLabel: document.getElementById('countLabel'),
+        startPhrase: document.getElementById('start-phrase'),
+        variant: document.getElementById('variant'),
+        generate: document.getElementById('generate'),
+        copy: document.getElementById('copy'),
+        download: document.getElementById('download'),
+        output: document.getElementById('loremText'),
+        customPrefix: document.getElementById('customPrefix'),
+        generatedAt: document.getElementById('generatedAt')
+      };
 
-        <section id="join-us" class="join-us-section">
-            <div class="container">
-                <h2>Become a Pegasus Virtual Pilot!</h2>
-                <p>
-                    Embark on your journey with Pegasus Virtual Airlines and experience flight simulation like never before.
-                    Join a thriving community, fly realistic routes, and progress through our pilot ranks.
-                    Whether you're new to virtual aviation or a seasoned veteran, we have a place for you.
-                </p>
-                <a href="https://discord.gg/9u6fpdGCfn" class="btn secondary-btn">Join Now!</a>
-            </div>
-        </section>
+      ui.countRange.addEventListener('input', ()=> ui.countLabel.textContent = ui.countRange.value);
 
-        <section id="community" class="community-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Connect with Our Community</h2>
-                </div>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 30px; color: var(--text-color); font-size: 1em;">
-                    Our vibrant community is at the heart of Pegasus Virtual Airlines. Join us on our forums, Discord, and social media to share your passion, get support, and participate in exciting events.
-                </p>
-                <div class="community-links">
-                    
-                    <a href="https://discord.gg/9u6fpdGCfn" target="_blank" class="btn primary-btn" style="background-color: #7289DA; border-color: #7289DA;"><i class="fab fa-discord"></i> Join Discord</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-       
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; Made by A350Dreams.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-         // Discord Login Integration
-
-        // Your Discord Client ID from the Discord Developer Portal
-
-        const CLIENT_ID = "1396149795470446692";
-
-        // The Redirect URI must EXACTLY match what's configured in your Discord OAuth2 settings
-
-        const REDIRECT_URI = "https://pfiberiava.github.io/flyibe/";
-
-
-        // Discord authorization URL - CRITICAL: Changed response_type to 'token'
-
-        const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify`;
-
-
-        // Select all divs where user actions will be displayed
-
-        const userActionsDivs = document.querySelectorAll(".user-actions");
-
-
-        // Function to display user information and the logout button
-
-        function showUser(user) {
-
-            const avatarUrl = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://discord.com/assets/f135b1fcd3d2c4935480d19e910540d5.png';
-
-            userActionsDivs.forEach(div => {
-
-                div.innerHTML = `
-
-                    <div class="user-info">
-
-                        <img src="${avatarUrl}" alt="User Avatar">
-
-                        <span>${user.username}</span>
-
-                        <button class="logout-button">Logout</button>
-
-                    </div>
-
-                `;
-
-                const logoutButton = div.querySelector(".logout-button");
-
-                if (logoutButton) {
-
-                    logoutButton.onclick = () => {
-
-                        localStorage.removeItem("discordUser");
-
-                        window.location.href = REDIRECT_URI; // Reload to reset state and clear URL hash
-
-                    };
-
-                }
-
-            });
-
+      function sentenceFrom(wordsPool, targetLength){
+        const parts = [];
+        while(parts.length < targetLength){
+          parts.push(wordsPool[Math.floor(Math.random()*wordsPool.length)]);
         }
-   // --- Main login state management logic ---
+        const s = parts.join(' ');
+        return s.charAt(0).toUpperCase() + s.slice(1) + '.';
+      }
 
-        const hash = window.location.hash.substring(1);
+      function generate(){
+        const mode = ui.mode.value;
+        const count = Number(ui.countRange.value);
+        const start = ui.startPhrase.value === 'yes';
+        const variant = ui.variant.value;
+        const prefix = ui.customPrefix.value.trim();
+        let pool = classic.join(' ').split(/\s+/);
 
-        const params = new URLSearchParams(hash);
+        if(variant === 'hipster') pool = pool.concat(hipsterWords);
+        if(variant === 'short') pool = shortWords;
 
-        const token = params.get("access_token"); // We are now expecting 'access_token'
+        let out = [];
 
-
-        const savedUser = JSON.parse(localStorage.getItem("discordUser"));
-
-
-        if (token) {
-
-            // If a token is present in the URL (after a new Discord login)
-
-            window.history.replaceState({}, document.title, REDIRECT_URI); // Clean the URL
-
-
-            fetch("https://discord.com/api/users/@me", {
-
-                headers: {
-
-                    Authorization: `Bearer ${token}`
-
-                }
-
-            })
-
-            .then(res => {
-
-                if (!res.ok) {
-
-                    console.error("Discord API error:", res.status, res.statusText);
-
-                    localStorage.removeItem("discordUser"); // Clear stale user data
-
-                    showLoginButton();
-
-                    throw new Error("Failed to fetch user data from Discord");
-
-                }
-
-                return res.json();
-
-            })
-
-            .then(user => {
-
-                if (user.id) {
-
-                    localStorage.setItem("discordUser", JSON.stringify(user));
-
-                    showUser(user);
-
-                } else {
-
-                    console.error("Invalid Discord user data received:", user);
-
-                    localStorage.removeItem("discordUser");
-
-                    showLoginButton();
-
-                }
-
-            })
-
-            .catch(error => {
-
-                console.error("Error during Discord user fetch or processing:", error);
-
-                localStorage.removeItem("discordUser");
-
-                showLoginButton();
-
-            });
-
-        } else if (savedUser) {
-
-            showUser(savedUser);
-
-        } else {
-
-            showLoginButton();
-
-        }                                                                                                                                                                   
-        // Function to show the login button
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const header = document.querySelector('header');
-            const navToggle = document.querySelector('.nav-toggle');
-            const navLinks = document.querySelector('.main-nav .nav-links');
-
-            // Header scroll effect (simplified)
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)'; /* Slightly transparent white */
-                    header.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
-                } else {
-                    header.style.backgroundColor = 'var(--white)';
-                    header.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-                }
-            });
-
-            // Mobile navigation toggle
-            if (navToggle && navLinks) {
-                navToggle.addEventListener('click', () => {
-                    navLinks.classList.toggle('active');
-                    // Close nav when clicking outside on mobile
-                    if (navLinks.classList.contains('active')) {
-                        document.body.style.overflow = 'hidden'; // Prevent scrolling when nav is open
-                    } else {
-                        document.body.style.overflow = '';
-                    }
-                });
+        if(mode === 'paragraphs'){
+          for(let i=0;i<count;i++){
+            const sentences = Math.floor(3 + Math.random()*4); // 3-6 sentences
+            const sentArr = [];
+            for(let s=0;s<sentences;s++){
+              sentArr.push(sentenceFrom(pool, Math.floor(8 + Math.random()*12)));
             }
+            let paragraph = sentArr.join(' ');
+            if(start && i===0) paragraph = "Lorem ipsum dolor sit amet. " + paragraph;
+            out.push(paragraph);
+          }
+          out = out.join('\n\n');
+        } else if(mode === 'sentences'){
+          const sentArr = [];
+          for(let i=0;i<count;i++){
+            sentArr.push(sentenceFrom(pool, Math.floor(8 + Math.random()*12)));
+          }
+          out = sentArr.join(' ');
+          if(start) out = "Lorem ipsum dolor sit amet. " + out;
+        } else { // words
+          const words = [];
+          for(let i=0;i<count;i++) words.push(pool[Math.floor(Math.random()*pool.length)]);
+          out = words.join(' ');
+          if(start) out = "Lorem ipsum " + out;
+        }
 
-            // Close mobile menu when clicking a link
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                });
-            });
+        if(prefix) out = prefix + (prefix.endsWith(' ') ? '' : ' ') + out;
+        ui.output.textContent = out;
+        ui.generatedAt.textContent = new Date().toLocaleString();
+      }
 
+      ui.generate.addEventListener('click', generate);
 
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
+      ui.copy.addEventListener('click', async ()=>{
+        try{
+          await navigator.clipboard.writeText(ui.output.textContent || '');
+          ui.copy.textContent = 'Copied';
+          setTimeout(()=> ui.copy.textContent = 'Copy', 900);
+        }catch(e){
+          const ta = document.createElement('textarea');
+          ta.value = ui.output.textContent || '';
+          document.body.appendChild(ta);
+          ta.select(); document.execCommand('copy'); ta.remove();
+          ui.copy.textContent = 'Copied';
+          setTimeout(()=> ui.copy.textContent = 'Copy', 900);
+        }
+      });
 
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
+      ui.download.addEventListener('click', ()=>{
+        const blob = new Blob([ui.output.textContent || ''], {type:'text/plain;charset=utf-8'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'lorem.txt'; document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(url);
+      });
 
-                    if (targetElement) {
-                        const headerOffset = header.offsetHeight;
-                        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                        const offsetPosition = elementPosition - headerOffset - 10; /* Adjusted for simpler design */
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Simple PIREP form submission (for demonstration, won't actually send data)
-            const pirepForm = document.getElementById('rxNYdFrhnel');
-            if (pirepForm) {
-                pirepForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const pilotId = document.getElementById('pilot-id').value;
-                    const aircraftReg = document.getElementById('aircraft-reg').value;
-                    const depAirport = document.getElementById('dep-airport').value;
-                    const arrAirport = document.getElementById('arr-airport').value;
-                    const flightDuration = document.getElementById('flight-duration').value;
-                    const landingRate = document.getElementById('landing-rate').value;
-                    const fuelUsed = document.getElementById('fuel-used').value;
-                    const comments = document.getElementById('comments').value;
-
-                    alert(`PIREP Submitted!\n\nPilot ID: ${pilotId}\nAircraft: ${aircraftReg}\nRoute: ${depAirport}-${arrAirport}\nDuration: ${flightDuration}\nLanding Rate: ${landingRate} fpm\nFuel Used: ${fuelUsed} kg\nComments: ${comments || 'No comments'}\n\n(In a real VA, this would be logged to a backend database.)`);
-                    pirepForm.reset(); // Clear form after submission
-                });
-            }
-        });
-    </script>
+      // generate initial sample
+      generate();
+    })();
+  </script>
 </body>
 </html>
